@@ -1,13 +1,14 @@
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.init as init
+from torch.nn import init
+from torch.nn import Parameter
 import torch.nn.functional as F
-from torch.nn.parameter import Parameter
+from functools import cached_property
 
 class GCNLayer(nn.Module):
 
-    def __init__(self, in_features, out_features, gcnii_varient = False):
+    def __init__(self, in_features, out_features):
 
         super(GCNLayer, self).__init__() 
         self.in_features = in_features
@@ -26,6 +27,36 @@ class GCNLayer(nn.Module):
         weights = term1 + term2
         output = torch.mm(features, weights)
         return output
+
+class GCNII(nn.Module):
+    def __init__(self, nfeat, nlayers, nhidden, nclass, dropout, lamda, alpha, variant):
+
+        super(GCNII, self).__init__()
+        self.graph_convs = []
+        for i in range(nlayers):
+            conv_layer = GCNLayer(nhidden, nhidden)
+            self.register_module(f'conv_{i + 1}', conv_layer)
+            self.graph_convs.append(conv_layer)
+        
+        self.pre_fc = nn.Linear(nfeat, nhidden)
+        self.post_fc = nn.Linear(nhidden, nclass)
+        
+        self.relu = nn.ReLU()
+        self.dropout = dropout
+        self.lamda = lamda
+        self.alpha = alpha
+    
+    def forward(self, x, adj):
+        
+        x = F.dropout(x, self.dropout, training = self.training)
+        h_0 = self.relu(self.pre_fc(x))
+        h = h_0
+        for i, con in enumerate(self.graph_convs):
+            h = F.dropout(h, self.dropout, training = self.training)
+            h = self.relu(con(h, adj, h_0, self.lamda, self.alpha, i + 1))
+        h = F.dropout(h, self.dropout, training = self.training)
+        h = self.post_fc(h)
+        return F.log_softmax(h, dim = 1)
 
 if __name__ == '__main__':
     pass
