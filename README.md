@@ -11,6 +11,6 @@ Graph Convolutional Networks (GCNs) are innovative extensions of Convolutional N
 
 To run the semi-supervised code refer to `GCNII_semi_supervised.ipynb`.
 
-To run the full-supervised for datasets Cora, Citeseer, and PubMed code refer to `GCNII_full_supervised_citation.ipynb`.
+To run the full-supervised code for datasets Cora, Citeseer, and PubMed refer to `GCNII_full_supervised_citation.ipynb`.
 
-To run the full-supervised for datasets Chameleon, Cornell, Texas, and Wisconsincode refer to `GCNII_full_supervised-WebKb.ipynb`.
+To run the full-supervised code for datasets Chameleon, Cornell, Texas, and Wisconsincode refer to `GCNII_full_supervised-WebKb.ipynb`.
