@@ -6,3 +6,9 @@ Graph Convolutional Networks (GCNs) are innovative extensions of Convolutional N
 [^1^]: [GCNII](https://dblp.org/rec/conf/icml/ChenWHDL20)
 [^2^]: [Vanilla GCN](https://arxiv.org/abs/1609.02907)
 [^3^]: [ResNet](https://dblp.org/rec/conf/cvpr/HeZRS16)
+
+# Code
+
+To run the semi-supervised code refer to 'GCNII_semi_supervised.ipynb'.
+To run the full-supervised for datasets Cora, Citeseer, and PubMed code refer to 'GCNII_full_supervised_citation.ipynb'.
+To run the full-supervised for datasets Chameleon, Cornell, Texas, and Wisconsincode refer to 'GCNII_full_supervised-WebKb.ipynb'.
